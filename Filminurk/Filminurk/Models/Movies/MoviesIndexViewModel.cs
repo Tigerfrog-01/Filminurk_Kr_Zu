@@ -11,7 +11,7 @@ namespace Filminurk.Models.Movies
 
         public DateOnly FirstPublished { get; set; }
 
-        public decimal? CurrentRating { get; set; }
+        public double? CurrentRating { get; set; }
 
         //public List<UserComment>? Reviews { get; set; }
 

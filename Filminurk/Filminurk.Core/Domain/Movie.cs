@@ -28,7 +28,7 @@ namespace Filminurk.Core.Domain
 
         public List<string>? Actors { get; set; }
 
-        public decimal? CurrentRating { get; set; }
+        public double? CurrentRating { get; set; }
 
         //public List<UserComment>? Reviews { get; set; }
 
