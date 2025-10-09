@@ -17,11 +17,11 @@ namespace Filminurk.Models.Movies
 
         /**/
 
-        /* 3 õpilase valitud andmetüüpi */
+        /* 2 õpilase valitud andmetüüpi */
 
      
 
-        public string Genre? Genre { get; set; }
+        public Genre? Genre { get; set; }
 
         public int AgeRating { get; set; }
 

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Data
 {
-    public class FilminurkTARoe24Context : DbContext
+    public class FilminurkTARpe24Context : DbContext
     {
         public DbSet<Movie> Movies { get; set; }
 
