@@ -1,5 +1,6 @@
 ﻿using Filminurk.Data;
 using Filminurk.Models.Movies;
+using Filminurk.Views.Movies;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers
@@ -25,5 +26,13 @@ namespace Filminurk.Controllers
             });
             return View(result);
         }
-    }
-}
+[HttpGet]
+        public IActionResult Create()
+        {
+            MoviesCreateViewModel result = new();
+            return View("Create",result);
+        }
+        }
+    }   
+     
+
