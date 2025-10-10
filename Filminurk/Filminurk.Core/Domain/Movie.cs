@@ -7,10 +7,7 @@ using System.Threading.Tasks;
 
 namespace Filminurk.Core.Domain
 {
-    public enum Genre
-    {
 
-    }
 
 
 

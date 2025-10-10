@@ -1,7 +1,12 @@
 ﻿using Filminurk.Core.Domain;
 
-namespace Filminurk.Views.Movies
+namespace Filminurk.Models.Movies
 {
+    public enum Genre
+    {
+        Horror,Drama,Comedy,Action,Romantic,
+    }
+
     public class MoviesCreateViewModel
     {
         public Guid ID { get; set; }
