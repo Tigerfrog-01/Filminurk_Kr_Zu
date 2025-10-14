@@ -25,7 +25,7 @@ namespace Filminurk.Controllers
                 Title = x.Title,
                 FirstPublished = x.FirstPublished,
                 CurrentRating = x.CurrentRating,
-                Genre = x.Genre,
+                Genre = (Models.Movies.Genre?)x.Genre,
                 AgeRating = x.AgeRating,
 
             });
@@ -53,7 +53,7 @@ namespace Filminurk.Controllers
                 Actors = vm.Actors,
                 CurrentRating = vm.CurrentRating,
                 AgeRating = vm.AgeRating,
-                genre = vm.Genre,
+                Genre = vm.Genre,
                 IMDBrating = vm.IMDBrating,
 
 

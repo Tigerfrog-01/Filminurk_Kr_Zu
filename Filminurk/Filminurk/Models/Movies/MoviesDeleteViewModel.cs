@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Filminurk.Core.Domain;
-
-namespace Filminurk.Core.Dto
+﻿namespace Filminurk.Models.Movies
 {
-    public class MoviesDTO
+    public class MoviesDeleteViewModel
     {
-
-
-
         public Guid? ID { get; set; }
 
         public string? Title { get; set; }
@@ -25,7 +15,6 @@ namespace Filminurk.Core.Dto
         public List<string>? Actors { get; set; }
 
         public double? CurrentRating { get; set; }
-
 
         //public List<UserComment>? Reviews { get; set; }
 
@@ -44,7 +33,5 @@ namespace Filminurk.Core.Dto
         public DateTime? EntryCreatedAt { get; set; }
 
         public DateTime? EntryModifedAt { get; set; }
-
-
     }
 }
