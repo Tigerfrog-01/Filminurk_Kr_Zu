@@ -7,9 +7,12 @@ using System.Threading.Tasks;
 namespace Filminurk.Core.Domain
 {
    
-        public class enum Genre
+        public  enum  Genre
         {
+       
+            
             Horror, Drama, Comedy, Action, Romantic,
+       
         }
     
 }

@@ -25,6 +25,7 @@ namespace Filminurk.Core.Dto
 
             public double? CurrentRating { get; set; }
 
+
             //public List<UserComment>? Reviews { get; set; }
 
             /**/

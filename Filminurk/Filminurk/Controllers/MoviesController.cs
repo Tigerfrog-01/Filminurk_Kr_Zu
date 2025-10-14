@@ -1,4 +1,7 @@
 ﻿using System.Reflection;
+using Filminurk.Core.Domain;
+using Filminurk.Core.Dto;
+using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
@@ -8,9 +11,11 @@ namespace Filminurk.Controllers
     public class MoviesController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
+        private readonly IMoviesServices _movieservices;
         public MoviesController ( FilminurkTARpe24Context context )
         {
             _context = context;
+            IMoviesServices movieServices;
         }
         public IActionResult Index()
         {
@@ -32,8 +37,11 @@ namespace Filminurk.Controllers
             MoviesCreateViewModel result = new();
             return View("Create",result);
         }
+
+       
+
         [HttpPost]
-        public async Task<IActionResult> Create(MoviesCreateViewModel vm)
+        public async Task<IActionResult> Create(MoviesCreateViewModel vm, Genre? genre)
         {
             var dto = new MoviesDTO()
             {
@@ -41,16 +49,16 @@ namespace Filminurk.Controllers
                 Title = vm.Title,
                 Description = vm.Description,
                 FirstPublished = vm.FirstPublished,
-                Directory = vm.Director,
+                Director = vm.Director,
                 Actors = vm.Actors,
                 CurrentRating = vm.CurrentRating,
                 AgeRating = vm.AgeRating,
-                Genre = vm.Genre,
+                genre = vm.Genre,
                 IMDBrating = vm.IMDBrating,
 
 
             };
-            var result = await _context.Create(dto);
+            var result = await _movieservices.Create(dto);
             if (result == null)
             {
                 return RedirectToAction(nameof(Index));
