@@ -44,7 +44,6 @@ namespace Filminurk.Core.Dto
         public DateTime? EntryCreatedAt { get; set; }
 
         public DateTime? EntryModifedAt { get; set; }
-
-
+        public DateTime? EntryModifiedAT { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Filminurk.Models.Movies
         Horror,Drama,Comedy,Action,Romantic,
     }
 
-    public class MoviesCreateViewModel
+    public class MoviesCreateUpdateViewModel
     {
         public Guid ID { get; set; }
 

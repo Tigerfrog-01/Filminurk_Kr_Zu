@@ -1,9 +1,18 @@
 ﻿@using Filminurk.Core.Domain
+@using Filminurk.Models.Movies
 
 
-@model Filminurk.Models.Movies.MoviesCreateViewModel
+@model Filminurk.Models.Movies.MoviesCreateUpdateViewModel
 
-<h1>Lisa Film</h1>
+@if(Model.ID.HasValue)
+{
+	<h1>Muuda Film</h1>
+}
+else
+{
+	<h1>Lisa Film</h1>
+}
+
 <div>
 
 	<form method="post=" enctype="multipart/form-data">
@@ -56,7 +65,7 @@
 		<div class="from-group row">
 			<label asp-for="Genre" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
-				<select asp-for="Genre" asp-items="Html.GetEnumSelectList<Genre"()>
+				<select asp-for="Genre" asp-items="Html.GetEnumSelectList<Genre>()">
 					<option value="">-- Vali Zanr</option>
 				</select>
 					<span asp-validation-for="Genre"></span>

@@ -39,6 +39,10 @@ namespace Filminurk.Core.Domain
 
         public int AgeRating { get; set; }
 
+        public DateTime? EntryCreatedAt { get; set; }
+
+        public DateTime? EntryModifedAt { get; set; }
+
 
     }
 }

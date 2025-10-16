@@ -24,6 +24,6 @@ namespace Filminurk.Models.Movies
         public Genre? Genre { get; set; }
 
         public int AgeRating { get; set; }
-
+        
     }
 }
