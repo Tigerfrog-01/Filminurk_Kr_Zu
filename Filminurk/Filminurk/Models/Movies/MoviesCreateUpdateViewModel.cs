@@ -2,10 +2,7 @@
 
 namespace Filminurk.Models.Movies
 {
-    public enum Genre
-    {
-        Horror,Drama,Comedy,Action,Romantic,
-    }
+  
 
     public class MoviesCreateUpdateViewModel
     {
