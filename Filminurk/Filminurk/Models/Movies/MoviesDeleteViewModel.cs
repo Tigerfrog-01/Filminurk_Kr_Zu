@@ -20,7 +20,8 @@ namespace Filminurk.Models.Movies
 
         //public List<UserComment>? Reviews { get; set; }
 
-        /**/
+        /*Kassaolevate piltide andmeomadused*/
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
 
         /* 3 õpilase valitud andmetüüpi */
 

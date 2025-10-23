@@ -1,6 +1,8 @@
-﻿using System.Reflection;
+﻿using System.Data.Entity;
+using System.Reflection;
 using System.Security.Cryptography.Xml;
 using Filminurk.Core.Domain;
+using Filminurk.Core.dto;
 using Filminurk.Core.Dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
@@ -13,15 +15,20 @@ namespace Filminurk.Controllers
     {
         private readonly FilminurkTARpe24Context _context;
         private readonly IMoviesServices _movieservices;
+        private readonly IFilesServices _filesServices; //Piltide lisamiseks vajalik fileservices injection
 
         public MoviesController
         (
             FilminurkTARpe24Context context,
-            IMoviesServices movieServices
+            IMoviesServices movieServices     ,
+            IFilesServices filesServices
+
         )
         {
             _context = context;
             _movieservices = movieServices;
+            _filesServices = filesServices;
+
         }
         public IActionResult Index()
         {
@@ -48,6 +55,15 @@ namespace Filminurk.Controllers
                 return NotFound();
             }
 
+            var images = await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    FilePath = y.ExistingFilePath,
+                    ImageID = id
+
+                }).ToArrayAsync();
+
             var vm = new MoviesCreateUpdateViewModel();
             {
                 vm.ID = movie.ID;
@@ -62,10 +78,54 @@ namespace Filminurk.Controllers
                 vm.IMDBrating = movie.IMDBrating;
                 vm.EntryCreatedAt = movie.EntryCreatedAt;
                 vm.EntryModifedAt = movie.EntryModifedAt;
+                vm.Images.AddRange(images);
+
 
                 return View("CreateUpdate", vm);
 
             }
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> Update(MoviesCreateUpdateViewModel vm)
+        {
+
+            var dto = new MoviesDTO()
+            {
+                ID = vm.ID,
+                Title = vm.Title,
+                Description = vm.Description,
+                FirstPublished = vm.FirstPublished,
+                Director = vm.Director,
+                Actors = vm.Actors,
+                CurrentRating = vm.CurrentRating,
+                AgeRating = vm.AgeRating,
+                Genre = vm.Genre,
+                IMDBrating = vm.IMDBrating,
+                EntryCreatedAt = vm.EntryCreatedAt,
+                EntryModifedAt = vm.EntryModifedAt,
+                Files = vm.Files,
+                FileToApiDT0s = vm.Images
+                .Select(x => new FileToApiDTO
+                {
+                    ImageID = x.ImageID,
+                    MovieID = x.MovieID,
+                    FilePath = x.FilePath,
+                }).ToArray()
+
+
+            }
+            
+
+               
+
+            
+
+
+
+
+
+
         }
 
 
@@ -98,7 +158,17 @@ namespace Filminurk.Controllers
                     Genre = vm.Genre,
                     IMDBrating = vm.IMDBrating,
                     EntryCreatedAt = vm.EntryCreatedAt,
-                    EntryModifiedAT = vm.EntryModifedAt
+                    EntryModifiedAT = vm.EntryModifedAt,
+                    Files = vm.Files,
+                    FileToApiDT0s = vm.Images
+                    .Select(x => new FileToApiDTO 
+                    {
+                        ImageID = x.ImageID,
+                        FilePath = x.FilePath,
+                        MovieID = x.MovieID,
+                        IsPoster = x.IsPoster,                   
+                    }).ToArray()
+
                 };
                 var result = await _movieservices.Create(dto);
                 if (result == null)
@@ -120,6 +190,14 @@ namespace Filminurk.Controllers
                 {
                     return NotFound();
                 }
+                var images = await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                FilePath = y.ExistingFilePath,
+                ImageID = y.ImageID,
+
+                }).ToArrayAsync();
 
                 var vm = new MoviesDeleteViewModel();
                 vm.ID = movie.ID;
@@ -134,7 +212,10 @@ namespace Filminurk.Controllers
                 vm.IMDBrating = movie.IMDBrating;
                 vm.EntryCreatedAt = movie.EntryCreatedAt;
                 vm.EntryModifedAt = movie.EntryModifedAt;
+                vm.Images.AddRange(images);
 
+                return View(vm);
+                
                 return View(vm);
             }
             [HttpPost]

@@ -22,15 +22,17 @@ namespace Filminurk.Models.Movies
 
         //public List<UserComment>? Reviews { get; set; }
 
-        /**/
+        /*Kassaolevate piltide andmeomadused*/
+        public List<IFormFile> Files { get; set; }
+        public List<ImageViewModel> Images { get; set; } = new List<ImageViewModel>();
 
         /* 3 õpilase valitud andmetüüpi */
 
-        public int IMDBrating { get; set; }
+        public int? IMDBrating { get; set; }
 
-        public Genre Genre { get; set; }
+        public Genre? Genre { get; set; }
 
-        public int AgeRating { get; set; }
+        public int? AgeRating { get; set; }
         /* andmebaasi jaoks vajalikud */
 
 

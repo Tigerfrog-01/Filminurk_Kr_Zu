@@ -14,6 +14,7 @@ namespace Filminurk.Data
         
         
         public DbSet<Movie> Movies { get; set; }
+        public DbSet<FileToApi> FilesToApi { get; set; }
 
     }
 }

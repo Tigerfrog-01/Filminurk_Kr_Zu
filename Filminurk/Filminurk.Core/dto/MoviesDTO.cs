@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Filminurk.Core.Domain;
+using Filminurk.Core.dto;
+using Microsoft.AspNetCore.Http;
 
 namespace Filminurk.Core.Dto
 {
@@ -30,6 +32,8 @@ namespace Filminurk.Core.Dto
         //public List<UserComment>? Reviews { get; set; }
 
         /**/
+        public List<IFormFile> Files { get; set; }
+        public IEnumerable<FileToApiDTO> FileToApiDT0s { get; set; }
 
         /* 3 õpilase valitud andmetüüpi */
 
