@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.Xml;
 using Filminurk.Core.Domain;
 using Filminurk.Core.dto;
@@ -115,18 +116,9 @@ namespace Filminurk.Controllers
 
 
             }
-            
-
-               
-
-            
-
-
-
-
-
 
         }
+
 
 
 
@@ -173,12 +165,12 @@ namespace Filminurk.Controllers
                 var result = await _movieservices.Create(dto);
                 if (result == null)
                 {
-                    return RedirectToAction(nameof(Index));
+                    return NotFound();
 
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return NotFound();
+            return RedirectToAction(nameof(Index));
         }
 
             [HttpGet]
@@ -216,7 +208,7 @@ namespace Filminurk.Controllers
 
                 return View(vm);
                 
-                return View(vm);
+               
             }
             [HttpPost]
             public async Task<IActionResult> DeleteConfirmation(Guid id)
@@ -228,6 +220,19 @@ namespace Filminurk.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+        private async Task<ImageViewModel[]> FileFromDatabase(Guid id)
+        {
+            return await _context.FilesToApi
+                .Where(x => x.MovieID == id)
+                .Select(y => new ImageViewModel
+                {
+                    ImageID = y.ImageID,
+                    MovieID = y.MovieID,
+                    IsPoster = y.IsPoster,
+                    FilePath = y.ExistingFilePath,
+                }).ToArrayAsync();
+
+        }
         }
     }
 

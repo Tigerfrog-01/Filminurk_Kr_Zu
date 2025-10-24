@@ -48,16 +48,16 @@ namespace Filminurk.ApplicationServices.Services
                             ExistingFilePath = uniqueFileName,
                             MovieID = domain.ID,
                         };
-                        _context.FilesToApi.AddAsync(path);
+                        _context.FilesToApi.Add(path);
                     }
                 }
             }
         }
-        public async Task<FileToApi> RemoveImageFromApi(FileToApiDTO dto)
+        public async Task<FileToApi> RemoveImagesFromApi(FileToApiDTO dto)
         {
             var imageID = await _context.FilesToApi.FirstOrDefaultAsync(x => x.ImageID == dto.ImageID);
 
-            var filePath = _webHost.ContentRootPath + "\\wwroot\\multipleFileUpload\\" + imageID.ExistingFilePath();
+            var filePath = _webHost.ContentRootPath + "\\wwroot\\multipleFileUpload\\" + imageID.ExistingFilePath;
 
             if (File.Exists(filePath))
             {
@@ -70,14 +70,13 @@ namespace Filminurk.ApplicationServices.Services
             return null;
         }
 
-        public async Task<List<FileToApi>> RemoveImageFromApi(FileToApiDTO[] dtos)
+        public async Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDTO[] dtos)
         {
             foreach (var dto in dtos)
             {
-            RemoveImageFromApi(dto);
+            RemoveImagesFromApi(dto);
             }
     return null;
-            }
-            
+        }
     }
 }
