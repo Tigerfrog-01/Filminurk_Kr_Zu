@@ -4,7 +4,7 @@
 
 @model Filminurk.Models.Movies.MoviesCreateUpdateViewModel
 
-@*@if(Model.ID.HasValue)
+@if(Model.ID.HasValue)
 {
 	<h1>Muuda Film</h1>
 }
@@ -13,12 +13,12 @@ else
 	<h1>Lisa Film</h1>
 }
 
-<div>*@
+<div>
 
 <form method="post=" enctype="multipart/form-data">
 	<input asp-for="ID" type="hidden"/>
 	<input asp-for="EntryCreatedAt" type="hidden"/>
-	<input asp-for="EntryModifedAt" type="hidden" />T
+	<input asp-for="EntryModifedAt" type="hidden" />
 
 	<div class="from-group row">
 		<label asp-for="Title" class="col-sm-2 col-form-label"></label>
@@ -106,6 +106,8 @@ else
 	{
 		<input asp-action="Update" asp-controller="Movies" type="submit" class="btn btn-primary" value="Update" />
 	}
+
+
 	else
 	{
 		<input asp-action="Create" asp-controller="Movies" type="submit" class="btn btn-primary" value="Create" />

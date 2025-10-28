@@ -2,6 +2,8 @@
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.Xml;
+using AspNetCoreGeneratedDocument;
+using Filminurk.ApplicationServices.Services;
 using Filminurk.Core.Domain;
 using Filminurk.Core.dto;
 using Filminurk.Core.Dto;
@@ -47,9 +49,9 @@ namespace Filminurk.Controllers
             return View(result);
         }
         [HttpGet]
-        public async Task<IActionResult> Update(Guid id)
+        public async Task<IActionResult> Update(Guid ID)
         {
-            var movie = await _movieservices.DetailsAsync(id);
+            var movie = await _movieservices.DetailsAsync(ID);
 
             if (movie == null)
             {
@@ -57,11 +59,11 @@ namespace Filminurk.Controllers
             }
 
             var images = await _context.FilesToApi
-                .Where(x => x.MovieID == id)
+                .Where(x => x.MovieID == ID)
                 .Select(y => new ImageViewModel
                 {
                     FilePath = y.ExistingFilePath,
-                    ImageID = id
+                    ImageID = ID
 
                 }).ToArrayAsync();
 
@@ -88,7 +90,7 @@ namespace Filminurk.Controllers
         }
         [HttpPost]
 
-        public async Task<IActionResult> Update(MoviesCreateUpdateViewModel vm)
+        public async Task<IActionResult> UpdateAsync(MoviesCreateUpdateViewModel vm)
         {
 
             var dto = new MoviesDTO()
@@ -106,29 +108,33 @@ namespace Filminurk.Controllers
                 EntryCreatedAt = vm.EntryCreatedAt,
                 EntryModifedAt = vm.EntryModifedAt,
                 Files = vm.Files,
-                FileToApiDT0s = vm.Images
+                FileToApiDTOs = vm.Images
                 .Select(x => new FileToApiDTO
                 {
                     ImageID = x.ImageID,
                     MovieID = x.MovieID,
                     FilePath = x.FilePath,
-                }).ToArray()
+                }).ToArray()             
+            };
+            var result = await _movieservices.Update(dto);
 
-
+            if (result == null)
+            {
+                return NotFound();
             }
-
+            return RedirectToAction(nameof(Index));
         }
 
 
 
 
-            [HttpGet]
+        [HttpGet]
             public IActionResult Create()
             {
                 MoviesCreateUpdateViewModel result = new();
                 return View("CreateUpdate", result);
             }
-        
+
 
 
         [HttpPost]
@@ -152,13 +158,13 @@ namespace Filminurk.Controllers
                     EntryCreatedAt = vm.EntryCreatedAt,
                     EntryModifiedAT = vm.EntryModifedAt,
                     Files = vm.Files,
-                    FileToApiDT0s = vm.Images
-                    .Select(x => new FileToApiDTO 
+                    FileToApiDTOs = vm.Images
+                    .Select(x => new FileToApiDTO
                     {
                         ImageID = x.ImageID,
                         FilePath = x.FilePath,
                         MovieID = x.MovieID,
-                        IsPoster = x.IsPoster,                   
+                        IsPoster = x.IsPoster,
                     }).ToArray()
 
                 };
@@ -166,10 +172,14 @@ namespace Filminurk.Controllers
                 if (result == null)
                 {
                     return NotFound();
-
+                }
+                if (!ModelState.IsValid)
+                {
+                    return NotFound();
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return RedirectToAction(nameof(Index));
         }
 

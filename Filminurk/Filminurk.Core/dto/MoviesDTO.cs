@@ -33,7 +33,7 @@ namespace Filminurk.Core.Dto
 
         /**/
         public List<IFormFile> Files { get; set; }
-        public IEnumerable<FileToApiDTO> FileToApiDT0s { get; set; }
+        public IEnumerable<FileToApiDTO> FileToApiDTOs { get; set; } = new List<FileToApiDTO>();
 
         /* 3 õpilase valitud andmetüüpi */
 

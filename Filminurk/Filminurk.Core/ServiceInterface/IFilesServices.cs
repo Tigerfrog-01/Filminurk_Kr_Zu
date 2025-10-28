@@ -11,11 +11,11 @@ namespace Filminurk.Core.ServiceInterface
 {
     public interface IFilesServices
     {
-        void FilesToApi(MoviesDTO dto, MoviesDTO domain);
+        void FilesToApi(MoviesDTO dto, Movie domain);
 
-        Task<FileToApi> RemoveImageFromApi(FileToApiDTO dto);
+        Task<FileToApi> RemoveImagesFromApi(FileToApiDTO dto);
 
-        Task<FileToApi> RemoveImagesFromApi(FileToApiDTO[] dto);
+        Task<List<FileToApi>> RemoveImagesFromApi(FileToApiDTO[] dtos);
 
     }
 }
