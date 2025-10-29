@@ -59,7 +59,7 @@ namespace Filminurk.ApplicationServices.Services
         }
         public async Task<Movie> DetailsAsync(Guid id)
         {
-            var result = await(_context.Movies.FirstOrDefaultAsync(x => x.ID == id));
+            var result = await _context.Movies.FirstOrDefaultAsync(x => x.ID == id);
             return result;
         }
 

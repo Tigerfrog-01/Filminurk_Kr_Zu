@@ -88,6 +88,12 @@ namespace Filminurk.Controllers
 
             }
         }
+        
+        
+        
+        
+
+
         [HttpPost]
 
         public async Task<IActionResult> UpdateAsync(MoviesCreateUpdateViewModel vm)
@@ -126,14 +132,14 @@ namespace Filminurk.Controllers
         }
 
 
-
-
-        [HttpGet]
+           [HttpGet]
             public IActionResult Create()
             {
                 MoviesCreateUpdateViewModel result = new();
                 return View("CreateUpdate", result);
             }
+
+        
 
 
 
@@ -220,7 +226,91 @@ namespace Filminurk.Controllers
                 
                
             }
-            [HttpPost]
+        [HttpGet]
+
+        public async Task <IActionResult> Details(Guid id)
+        {
+            var movie = await _movieservices.DetailsAsync(id);
+
+                if (movie == null)
+            {
+                return NotFound();
+            }
+
+                ImageViewModel[] images = await FileFromDatabase(id);
+
+                var vm = new MoviesDetailsViewModel();
+
+                vm.ID = movie.ID;
+                vm.Title = movie.Title;
+                vm.Description = movie.Description;
+                vm.FirstPublished = movie.FirstPublished;
+                vm.Director = movie.Director;
+                vm.Actors = movie.Actors;
+                vm.CurrentRating = movie.CurrentRating;
+                vm.AgeRating = movie.AgeRating;
+                vm.Genre = movie.Genre;
+                vm.IMDBrating = movie.IMDBrating;
+                vm.EntryCreatedAt = movie.EntryCreatedAt;
+                vm.EntryModifedAt = movie.EntryModifedAt;
+                vm.Images.AddRange(images);
+
+                return View("CreateUpdate",vm);
+
+            }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(MoviesCreateUpdateViewModel vm)
+        {
+            var dto = new MoviesDTO()
+            {
+             ID = vm.ID,
+             Title = vm.Title,
+             Description = vm.Description,
+             FirstPublished = vm.FirstPublished,
+             Director = vm.Director,
+             Actors = vm.Actors,
+             CurrentRating = vm.CurrentRating,
+             AgeRating = vm.AgeRating,
+             Genre = vm.Genre,
+             IMDBrating = vm.IMDBrating,
+             EntryCreatedAt = vm.EntryCreatedAt,
+             EntryModifedAt = vm.EntryModifedAt,
+             Files = vm.Files,
+             FileToApiDTOs = vm.Images
+
+
+                
+                .Select(x => new FileToApiDTO
+                {
+                    ImageID = x.ImageID,
+                    MovieID = x.MovieID,
+                    FilePath = x.FilePath
+                }).ToArray()
+            };
+            var result = await _movieservices.Update(dto);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [HttpPost]
             public async Task<IActionResult> DeleteConfirmation(Guid id)
             {
                 var movie = await _movieservices.Delete(id);
