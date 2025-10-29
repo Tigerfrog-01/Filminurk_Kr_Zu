@@ -27,7 +27,7 @@ namespace Filminurk.Core.Domain
 
         public double? CurrentRating { get; set; }
 
-        //public List<UserComment>? Reviews { get; set; }
+        public List<UserComment>? Reviews { get; set; }
 
         /**/
 
