@@ -1,0 +1,83 @@
+﻿@using Filminurk.Core.Domain
+@using Filminurk.Models.Actors
+
+
+@model Filminurk.Models.Actors.ActorsIndexViewModel
+
+
+
+<div>
+
+
+	<form method="post" enctype="multipart/form-data">
+		<input asp-for="ActorID" type="hidden" />
+		<input asp-for="MoviesActedFor" type="hidden"/>
+
+
+
+		<div class="from-group row">
+			<label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="FirstName" class="form-control" />
+			</div>
+		</div>
+
+		<div class="from-group row">
+			<label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="LastName" class="form-control" />
+			</div>
+		</div>
+
+		<div class="from-group row">
+			<label asp-for="Nickname" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Nickname" class="form-control" />
+			</div>
+		</div>
+
+		<div class="from-group row">
+			<label asp-for="Age" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="Age" class="form-control" />
+			</div>
+		</div>
+
+		<div class="from-group row">
+			<label asp-for="MoviesActedFor" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<input asp-for="MoviesActedFor" class="form-control" />
+			</div>
+		</div>
+
+	
+		<div class="from-group row">
+			<label asp-for="Addiction" class="col-sm-2 col-form-label"></label>
+			<div class="col-sm-10">
+				<select asp-for="Addiction" asp-items="Html.GetEnumSelectList<Addiction>()">
+					<option value="">-- Mis on Näitleja pealmine Sõltuvus?</option>
+				</select>
+				<span asp-validation-for="Addiction"></span>
+
+			</div>
+		</div>
+
+	<div class="from-group row">
+		<label asp-for="Crimes" class="col-sm-2 col-form-label"></label>
+		<div class="col-sm-10">
+			<select asp-for="Crimes" asp-items="Html.GetEnumSelectList<Crimes>()">
+				<option value="">-- Mis on Näitleja tuntuim kuritegevus mis ta on sooritanud?</option>
+			</select>
+			<span asp-validation-for="Crimes"></span>
+
+		</div>
+	</div>
+
+
+		<input asp-action="Create" asp-controller="Actors" type="submit" class="btn btn-primary" value="Create" />
+		<a asp-action="Index" asp-controller="Actors" class="btn btn-success">Back</a>
+
+	</form>
+
+
+</div>

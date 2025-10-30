@@ -1,0 +1,60 @@
+﻿@model Filminurk.Models.Actors.ActorsDeleteView
+
+<h1>
+	<h4>Film</h4>
+	<hr />
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="ActorID" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.ActorID)
+		</div>
+	</dl>
+
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="FirstName" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.FirstName)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="LastName" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.LastName)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Nickname" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.Nickname)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Age" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.Age)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="MoviesActedFor" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.MoviesActedFor)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Crimes" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.Crimes)
+		</div>
+	</dl>
+	<dl class="row">
+		<div class="form-group-row">
+			<label asp-for="Addiction" class="col-sm-2 col-form-label"></label>
+			@Html.DisplayFor(Model => Model.Addiction)
+		</div>
+	</dl>
+
+
+
+	<hr />
+	<input asp-action="Delete" asp-controller="Actors" type="submit" class="btn btn-primary" value="Delete" />
+</h1>
