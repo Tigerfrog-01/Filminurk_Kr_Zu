@@ -55,7 +55,7 @@
 			<label asp-for="Addiction" class="col-sm-2 col-form-label"></label>
 			<div class="col-sm-10">
 				<select asp-for="Addiction" asp-items="Html.GetEnumSelectList<Addiction>()">
-					<option value="">-- Mis on Näitleja pealmine Sõltuvus?</option>
+				
 				</select>
 				<span asp-validation-for="Addiction"></span>
 
@@ -66,7 +66,7 @@
 		<label asp-for="Crimes" class="col-sm-2 col-form-label"></label>
 		<div class="col-sm-10">
 			<select asp-for="Crimes" asp-items="Html.GetEnumSelectList<Crimes>()">
-				<option value="">-- Mis on Näitleja tuntuim kuritegevus mis ta on sooritanud?</option>
+			
 			</select>
 			<span asp-validation-for="Crimes"></span>
 
