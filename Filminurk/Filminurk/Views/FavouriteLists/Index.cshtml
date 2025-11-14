@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Filminurk.FavouriteLists.FavouriteListsIndexViewModel>
+
+@{
+	int rowNumber = 1;
+	int CurrentRow = 1;
+	int CurrentTitle = 1;
+	int titlesInRow = 1;
+
+}
+<div>
+<a asp-action="CreateList" asp-controller="FavouriteLists" class="btn btn-primary">Tee uus lemmikute nimekiri</a>
+</div>
+
