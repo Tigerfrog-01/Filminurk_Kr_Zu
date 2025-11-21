@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Filminurk.Core.Domain;
+using Filminurk.Core.dto;
 
 namespace Filminurk.Core.ServiceInterface
 {
@@ -11,6 +12,7 @@ namespace Filminurk.Core.ServiceInterface
     {
         public Task<FavouriteList> DetailsAsync(Guid id);
 
+        Task<FavouriteList> Create(FavouriteListDTO dto);
 
     }
 }

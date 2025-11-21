@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.ApplicationServices.Services
 {
-    public class FavouriteListsServices :IFavouriteListsServices
+    public class FavouriteListsServices : IFavouriteListsServices
     {
         private readonly FilminurkTARpe24Context _context;
         private readonly IFilesServices _filesServices;
@@ -28,7 +28,7 @@ namespace Filminurk.ApplicationServices.Services
                 .FirstOrDefaultAsync(x => x.FavouriteListID == id);
             return result;
         }
-        public async Task<FavouriteList> Create(FavouriteListDTO dto,List<Movie> selectedMovies)
+        public async Task<FavouriteList> Create(FavouriteListDTO dto /*,List<Movie> selectedMovies*/)
         {
             FavouriteList newlist = new();
             newlist.FavouriteListID = Guid.NewGuid();
@@ -37,7 +37,7 @@ namespace Filminurk.ApplicationServices.Services
             newlist.ListCreatedAt = dto.ListCreatedAt;
             newlist.ListModifiedAt = (DateTime)dto.ListModifiedAt;
             newlist.ListDeletedAt = (DateTime)dto.ListDeletedAt;
-            //newlist.ListOfMovies = selectedMovies;
+            newlist.ListOfMovies = dto.ListOfMovies;
             await _context.FavouriteLists.AddAsync(newlist);
             await _context.SaveChangesAsync();
 

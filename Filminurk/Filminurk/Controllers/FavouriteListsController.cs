@@ -10,11 +10,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers
 {
-    public class FavouriteListController : Controller
+    public class FavouriteListsController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
         private readonly IFavouriteListsServices _favouriteListsServices;
-        public FavouriteListController( FilminurkTARpe24Context context, IFavouriteListsServices favouriteListsServices )
+        public FavouriteListsController(FilminurkTARpe24Context context, IFavouriteListsServices favouriteListsServices)
         {
             _context = context;
             _favouriteListsServices = favouriteListsServices;
@@ -30,7 +30,7 @@ namespace Filminurk.Controllers
                 ListName = x.ListName,
                 ListDescription = x.ListDescription,
                 ListCreatedAt = x.ListCreatedAt,
-                Image =(List<FavouriteListIndexImageViewModel>)_context.FilesToDatabase.Where(ml => ml.ListID == x.FavouriteListID)
+                Image = (List<FavouriteListIndexImageViewModel>)_context.FilesToDatabase.Where(ml => ml.ListID == x.FavouriteListID)
                 .Select(li => new FavouriteListIndexImageViewModel
                 {
                     ListID = li.ListID,
@@ -46,7 +46,7 @@ namespace Filminurk.Controllers
         /* create get, create post */
 
         [HttpGet]
-        
+
         public IActionResult Create()
         {
             var movies = _context.Movies.OrderBy(m => m.Title).Select(mo => new MoviesIndexViewModel
@@ -67,12 +67,14 @@ namespace Filminurk.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> Create(FavouriteCreateViewModel vm, List<string> userhasSelected,List<MoviesIndexViewModel> movies)
+        public async Task<IActionResult> Create(FavouriteCreateViewModel vm, List<string> userhasSelected, List<MoviesIndexViewModel> movies)
         {
 
             List<Guid> tempParse = new();
+            //tekkib ajutine guid list movieid-de hoidmiseks
             foreach (var stringID in userhasSelected)
             {
+                //lisame iga stringi kohta järjendis userhasselected teisendatud guidi
                 tempParse.Add(Guid.Parse(stringID));
 
             }
@@ -84,17 +86,24 @@ namespace Filminurk.Controllers
             newListDto.IsPrivate = vm.IsPrivate;
             newListDto.ListCreatedAt = DateTime.UtcNow;
             newListDto.ListBelongsToUser = "00000000-0000-0000-000000000001";
-            newListDto.ListModifiedAt = DateTime.UtcNow;    
+            newListDto.ListModifiedAt = DateTime.UtcNow;
             newListDto.ListDeletedAt = vm.ListDeletedAt;
+            
 
-            List<Guid> convertedIDs= new List<Guid>();
-            if (newListDto.ListOfMovies !=null)         
+            //lisa filmid nimekirja,olemasolevate id-de põhiliselt 
+            var listofmoviestoadd = new List<Movie>();
+            foreach (var movieId in tempParse)
             {
-                convertedIDs = MovieToid(newListDto.ListOfMovies);
-
-
-             }
-            var newlist = await _favouriteListsServices.Create(newListDto, convertedIDs);
+                Movie thismovie = (Movie)_context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
+                newListDto.ListOfMovies.Add((Movie)thismovie);
+            }
+            newListDto.ListOfMovies = vm.ListOfMovies;
+            //List<Guid> convertedIDs= new List<Guid>();
+            //if (newListDto.ListOfMovies !=null)         
+            //{
+            //    convertedIDs = MovieToid(newListDto.ListOfMovies);
+            // }
+            var newlist = await _favouriteListsServices.Create(newListDto /*, convertedIDs*/);
             if (newlist != null)
             {
                 return BadRequest();
@@ -102,8 +111,12 @@ namespace Filminurk.Controllers
             return RedirectToAction("Index", vm);
 
 
-        
-    }
+
+        }
+    
+
+
+     
 
         private List<Guid> MovieToid(List<Movie> listOfMovies)
         {
