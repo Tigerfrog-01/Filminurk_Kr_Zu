@@ -122,6 +122,17 @@ namespace Filminurk.Controllers
                 return BadRequest();
                 //T0D0 return corresponding errorviews. id not found for list, and user login error for userid
             }
+           // var images = _context.FilesToDatabase
+            //    .Where(i => i.ListID == id)
+            //    .Select(si => new FavouriteListIndexImageViewModel
+            //    {
+            //        ImageID = si.ImageID,
+                  //  ListID = si.ListID,
+                 //   ImageData = si.ImageData,
+                //    ImageTitle = si.ImageTitle,
+               //     Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(si.ImageData))
+             //   }).ToList().First();
+
             var thislist = _context.FavouriteLists.Where(tl => tl.FavouriteListID == id && tl.ListBelongsToUser == thisuserid.ToString())
             .Select(stl => new FavouriteListDetailsViewModel
             {
@@ -133,29 +144,55 @@ namespace Filminurk.Controllers
                 IsPrivate = stl.IsPrivate,
                 ListOfMovies = stl.ListOfMovies,
                 IsReported = stl.IsReported,
-                Image = _context.FilesToDatabase
-                .Where(i => i.ListID == stl.FavouriteListID)
-                .Select(si => new FavouriteListIndexImageViewModel
-                {
-                    ImageID = si.ImageID,
-                    ListID = si.ListID,
-                    ImageData = si.ImageData,
-                    ImageTitle = si.ImageTitle,
-                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(si.ImageData))
-                }).ToList().First()
-            }).ToList().First();
-            if(!ModelState.IsValid)
-            {
-               return NotFound();
-            }
+               // Image = _context.FilesToDatabase
+                //.Where(i => i.ListID == stl.FavouriteListID)
+                //.Select(si => new FavouriteListIndexImageViewModel
+              //  {
+              //      ImageID = si.ImageID,
+              //      ListID = si.ListID,
+              //      ImageData = si.ImageData,
+              //      ImageTitle = si.ImageTitle,
+             //       
+             //   }).ToList()
+           }).First();
+       // Image = images
+         //   if(!ModelState.IsValid)
+          //  {
+         // //     return NotFound();
+           // }
             //add viewdata attribute here later, to discern between user and admin
             if(thislist == null)
             {
                 return NotFound();
             }
-            return View("Details",thislist);
+            return View("Details", thislist);
         }
+        [HttpPost]
+        public  IActionResult UserTogglePrivacy(Guid id)
+        {
+            FavouriteList thisList = _favouriteListsServices.DetailsAsync(id);
 
+            FavouriteListDTO updatedList = new FavouriteListDTO();
+            updatedList.FavouriteListID = thisList.FavouriteListID;
+            updatedList.ListBelongsToUser = thisList.ListBelongsToUser;
+            updatedList.ListName = thisList.ListName;
+            updatedList.ListDescription = thisList.ListDescription;
+            updatedList.IsPrivate = thisList.IsPrivate;
+            updatedList.ListOfMovies = thisList.ListOfMovies;
+            updatedList.IsReported = thisList.IsReported;
+            updatedList.IsMovieOrActor = thisList.IsMovieOrActor;
+            updatedList.ListCreatedAt = (DateTime)thisList.ListCreatedAt;
+            updatedList.ListModifiedAt = DateTime.Now;
+            updatedList.ListDeletedAt = thisList.ListDeletedAt;
+
+
+
+
+            thisList.IsPrivate = !thisList.IsPrivate;
+            _favouriteListsServices.Update(thisList);
+           
+            return View("Details");
+        }
     
 
      

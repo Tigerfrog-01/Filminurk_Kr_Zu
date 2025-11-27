@@ -1,6 +1,6 @@
 ﻿@model Filminurk.Models.FavouriteList.FavouriteListIndexImageViewModel
 <div>
-	@if (!Model.Image.Any())
+	@if (!Model.Image.Any() ||Model == null)
 	{
 		<p> Pilte pole</p>
 	}	
