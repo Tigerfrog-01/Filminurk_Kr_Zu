@@ -15,7 +15,7 @@
 		<input asp-for="ListModifiedAt" type="hidden" />
 		<input asp-for="ListDeletedAt" type="hidden" />
 		<input asp-for="IsReported" type="hidden"/>
-	</form>
+	
 
 	<div class="form-group-row">
 		<label asp-for="ListName" class="col-sm-2 col-form-label"></label>
@@ -82,7 +82,7 @@
 			</tr>
 		}
 	}
-	<input asp-action="UserCreate" asp-controller="FavourieLists" type="submit" class="btn btn-primary" value="Tee nimekiri"/>
-
+	<input asp-action="Create" asp-controller="FavouriteLists" type="submit" method="post"class="btn btn-primary" value="Tee nimekiri"/>
+	</form>
 
 </div>

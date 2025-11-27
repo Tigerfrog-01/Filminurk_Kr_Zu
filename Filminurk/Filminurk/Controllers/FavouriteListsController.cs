@@ -41,13 +41,16 @@ namespace Filminurk.Controllers
                 })
 
             });
-            return View();
+            return View(resultingLists);
         }
         /* create get, create post */
 
         [HttpGet]
 
         public IActionResult Create()
+        
+        
+        
         {
             var movies = _context.Movies.OrderBy(m => m.Title).Select(mo => new MoviesIndexViewModel
             {
@@ -85,17 +88,17 @@ namespace Filminurk.Controllers
             newListDto.IsMovieOrActor = vm.IsMovieOrActor;
             newListDto.IsPrivate = vm.IsPrivate;
             newListDto.ListCreatedAt = DateTime.UtcNow;
-            newListDto.ListBelongsToUser = "00000000-0000-0000-000000000001";
+            newListDto.ListBelongsToUser = Guid.NewGuid().ToString();
             newListDto.ListModifiedAt = DateTime.UtcNow;
             newListDto.ListDeletedAt = vm.ListDeletedAt;
-            
+
 
             //lisa filmid nimekirja,olemasolevate id-de põhiliselt 
             var listofmoviestoadd = new List<Movie>();
             foreach (var movieId in tempParse)
             {
-                Movie thismovie = (Movie)_context.Movies.Where(tm => tm.ID == movieId).ToArray().Take(1);
-                newListDto.ListOfMovies.Add((Movie)thismovie);
+                Movie thismovie = (Movie)_context.Movies.Where(tm => tm.ID == movieId).ToList().First();
+                
             }
             newListDto.ListOfMovies = vm.ListOfMovies;
             //List<Guid> convertedIDs= new List<Guid>();
@@ -104,17 +107,56 @@ namespace Filminurk.Controllers
             //    convertedIDs = MovieToid(newListDto.ListOfMovies);
             // }
             var newlist = await _favouriteListsServices.Create(newListDto /*, convertedIDs*/);
-            if (newlist != null)
+            if (newlist == null)
             {
                 return BadRequest();
             }
             return RedirectToAction("Index", vm);
 
-
-
         }
-    
 
+        public async Task<IActionResult> UserDetails(Guid id,Guid thisuserid)
+        {
+            if (id==null || thisuserid == null)
+            {
+                return BadRequest();
+                //T0D0 return corresponding errorviews. id not found for list, and user login error for userid
+            }
+            var thislist = _context.FavouriteLists.Where(tl => tl.FavouriteListID == id && tl.ListBelongsToUser == thisuserid.ToString())
+            .Select(stl => new FavouriteListDetailsViewModel
+            {
+                FavouriteListID = stl.FavouriteListID,
+                ListBelongsToUser = stl.ListBelongsToUser,
+                IsMovieOrActor = stl.IsMovieOrActor,
+                ListName = stl.ListName,
+                ListDescription = stl.ListDescription,
+                IsPrivate = stl.IsPrivate,
+                ListOfMovies = stl.ListOfMovies,
+                IsReported = stl.IsReported,
+                Image = _context.FilesToDatabase
+                .Where(i => i.ListID == stl.FavouriteListID)
+                .Select(si => new FavouriteListIndexImageViewModel
+                {
+                    ImageID = si.ImageID,
+                    ListID = si.ListID,
+                    ImageData = si.ImageData,
+                    ImageTitle = si.ImageTitle,
+                    Image = string.Format("data:image/gif;base64,{0}", Convert.ToBase64String(si.ImageData))
+                }).ToList().First()
+            }).ToList().First();
+            if(!ModelState.IsValid)
+            {
+               return NotFound();
+            }
+            //add viewdata attribute here later, to discern between user and admin
+            if(thislist == null)
+            {
+                return NotFound();
+            }
+            return View("Details",thislist);
+        }
+
+    
 
      
 
