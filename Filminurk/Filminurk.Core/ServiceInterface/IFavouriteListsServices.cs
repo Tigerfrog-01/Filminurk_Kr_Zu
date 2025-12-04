@@ -13,6 +13,7 @@ namespace Filminurk.Core.ServiceInterface
         public Task<FavouriteList> DetailsAsync(Guid id);
 
         Task<FavouriteList> Create(FavouriteListDTO dto);
+        Task<FavouriteList> Update(FavouriteListDTO updatedlist,string typeOfMethod);
 
     }
 }

@@ -26,9 +26,8 @@ namespace Filminurk.Core.Domain
 
         public DateTime? ListModified { get; set; }
 
-        public DateTime ListModifiedAt { get; set; }
 
-        public DateTime ListDeletedAt { get; set; }
+        public DateTime? ListDeletedAt { get; set; }
         public bool IsReported { get; set; }
 
     }
