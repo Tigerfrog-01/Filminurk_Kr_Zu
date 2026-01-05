@@ -27,8 +27,29 @@ namespace Filminurk.Controllers
                 EmailSubject = vm.EmailSubject,
                 EmailContent = vm.EmailContent
             };
-            _emailServices.SendEmail(dto);  
+            _emailServices.SendEmail(dto);
             return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public IActionResult Register(EmailViewModel vm)
+        {
+
+            return View(Index);
+        }
+
+        [HttpPost]
+        public IActionResult SendRegister(EmailViewModel vm)
+        {
+            var dto = new EmailDTO
+            {
+                SendToThisAddress = vm.SendToThisAddress,
+                EmailSubject = vm.EmailSubject,
+                EmailContent = vm.EmailContent
+            };
+            _emailServices.SendEmail(dto);
+            return RedirectToAction(nameof(Index));
+
+
         }
     }
 }

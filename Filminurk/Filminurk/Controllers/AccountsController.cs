@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Filminurk.Models.Accounts;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Filminurk.Controllers
 {
@@ -7,6 +9,12 @@ namespace Filminurk.Controllers
         public IActionResult Index()
         {
             return View();
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Register(RegisterViewModel model)
+        {
+
         }
     }
 }
