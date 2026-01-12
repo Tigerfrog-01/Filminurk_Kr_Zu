@@ -39,11 +39,14 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Emails" asp-action="Index">Saada kiri</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="AccuWeather" asp-action="Index">Vaata Ilma</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Index">Konto</a>
                         </li>
                     </ul>
                     <ul>
-                        @if(signInManager.IsSigned(user))
+                        @* @if(signInManager.IsSigned(User))
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="">Minu lemmikute nimekirjad</a>
@@ -51,12 +54,12 @@
                             </li>
                             <li class="nav-item">
                                 <form method="post" asp-controller="Accounts" asp-action="LogOut">
-                                    <button type="submit" class="nav-link btn-btn-link" style="width:auto;padding:0.8rem
+                                    <button type="submit" class="nav-link btn-btn-link" style="width:auto;padding:0.8rem;">Logi välja</button>
 "
                                 </form>
 
                             </li>
-                        }
+                        } *@
                     </ul>
                 </div>
             </div>

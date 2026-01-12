@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -53,7 +54,7 @@ namespace Filminurk.Core.dto.AccuWeatherDTOs
     {
         public string Code { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
-        public int GetOffset { get; set; }
+        public double GetOffset { get; set; }
         public bool IsDaylightSavingTime { get; set; }
         public DateTime NextOffSetChange { get; set; }
 
@@ -72,7 +73,7 @@ namespace Filminurk.Core.dto.AccuWeatherDTOs
     public class Metric
     {
         public int Value { get; set; }
-        public int Unit { get; set; }
+        public string Unit { get; set; } = string.Empty;
         public int UnitType { get; set; }
 
     }
@@ -80,13 +81,13 @@ namespace Filminurk.Core.dto.AccuWeatherDTOs
     {
 
         public int Value { get; set; }
-        public int Unit { get; set; }
+        public string Unit { get; set; } = string.Empty ;
         public int UnitType { get; set; }
 
     }
     public class SupplementalAdminArea
     {
-        public int Level { get; set; }
+        public int Level { get; set; } 
         public string LocalizedName { get; set; } = string.Empty;
         public string EnglishName { get; set; } = string.Empty;
     }

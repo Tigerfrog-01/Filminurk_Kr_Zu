@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Filminurk.Core.Domain;
 
 namespace Filminurk.Core.dto.AccountDTOs
 {
-    public class ApplicationUserDTO
+    public class ApplicationUserDTO : ApplicationUser
     {
         public string UserName { get; set; }
         public string Password { get; set; }
