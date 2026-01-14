@@ -12,5 +12,6 @@ namespace Filminurk.Data
         public static string gmailpassword = "dcsz zwzm efwa zqte";
         public static string gmailusername = "pirn666";
         public static string accuweatherkey = "zpka_43b9833a2a0546ab957a58c7ad51f54a_10160fbb";
+        public static string Importkey = "28bd6ace";
     }
 }

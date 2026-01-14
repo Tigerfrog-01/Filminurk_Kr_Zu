@@ -20,30 +20,31 @@ namespace Filminurk.ApplicationServices.Services
             var cityurl = "https://dataservice.accuweather.com/locations/v1/cities/search";
 
             /*get city*/
-            using (var HttpClient = new HttpClient())
-            {
-                HttpClient.BaseAddress = new Uri(cityurl);
-                HttpClient.DefaultRequestHeaders.Accept.Clear();
-                HttpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-                var response = await HttpClient.GetAsync($"? apikey = { apikey}&={ dto.CityName}");
-                var JsonResponse = await response.Content.ReadAsStringAsync();
-                List<AccuCityCodeRootDTO> weatherData = JsonSerializer.Deserialize<List<AccuCityCodeRootDTO>>(JsonResponse);
+            //using (var HttpClient = new HttpClient())
+            //{
+            //    HttpClient.BaseAddress = new Uri(cityurl);
+            //    HttpClient.DefaultRequestHeaders.Accept.Clear();
+            //    HttpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            //    var response = await HttpClient.GetAsync($"? apikey = { apikey}&={ dto.CityName}");
+            //    var JsonResponse = await response.Content.ReadAsStringAsync();
+            //    List<AccuCityCodeRootDTO> codeData = JsonSerializer.Deserialize<List<AccuCityCodeRootDTO>>(JsonResponse);
 
-                dto.CityCode = weatherData[0].Key;
-                dto.CityName = weatherData[0].LocalizedName;
+            //    dto.CityCode = codeData[0].Key;
+               
 
                 
-            }
-            string weatheresponse = baseurl + $"{dto.CityCode}?apikey={apikey}";
+            //}
+            //string LocationResponse = baseurl + $"{dto.CityCode}?apikey={apikey}";
 
-            using (var clientLocation = new HttpClient())
-            {
-                var httpResponseLocation = await clientLocation.GetAsync(LocationResponse);
-                string jsonLocation = await httpResponseLocation.Content.ReadAsStringAsync();
-                AccuCityCodeRootDTO cityRootDto.Key;
+            //using (var clientLocation = new HttpClient())
+            //{
+            //    var httpResponseLocation = await clientLocation.GetAsync(LocationResponse);
+            //    string jsonLocation = await httpResponseLocation.Content.ReadAsStringAsync();
+            //    AccuCityCodeRootDTO cityCodeRootDTO = JsonSerializer.Deserialize<AccuCityCodeRootDTO>(jsonLocation);
+            //    AccuCityCodeRootDTO cityRootDto.Key;
 
 
-            }
+            //}
             
 
 
@@ -52,8 +53,8 @@ namespace Filminurk.ApplicationServices.Services
                 httpclient.BaseAddress = new Uri(baseurl);
                 httpclient.DefaultRequestHeaders.Accept.Clear();
                 httpclient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            var response = await httpclient.GetAsync($"{dto.CityCode}?apikey{apikey}&details=true");
-            var jsonResponse =  response.Content.ReadAsStringAsync();
+            var response =  httpclient.GetAsync($"{dto.CityCode}?apikey{apikey}&details=true").GetAwaiter().GetResult();
+            var jsonResponse =  await response.Content.ReadAsStringAsync();
             List<AccuCityCodeRootDTO> weatherData = JsonSerializer.Deserialize<List<AccuCityCodeRootDTO>>(jsonResponse);
             dto.CityName = weatherData[0].LocalizedName;
             dto.CityCode = weatherData[0].Key;
@@ -62,7 +63,7 @@ namespace Filminurk.ApplicationServices.Services
             string weatherResponse = baseurl + $" {dto.CityCode}?apiKey={apikey}&metric=true";
 
             using (var clientWeather = new HttpClient()) {
-                var httpResponseWeather = await clientWeather.GetAsync(weatherResponse);
+                var httpResponseWeather =  clientWeather.GetAsync(weatherResponse).GetAwaiter().GetResult();
                 string jsonweather = await httpResponseWeather.Content.ReadAsStringAsync();
 
                 AccuLocationRootDTO weatherRootDTO = JsonSerializer.Deserialize<AccuLocationRootDTO>(jsonweather);
