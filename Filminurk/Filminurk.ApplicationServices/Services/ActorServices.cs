@@ -45,18 +45,19 @@ namespace Filminurk.ApplicationServices.Services
             return actors;
         }
 
+    
         public async Task<Actors> Delete(Guid id)
         {
             Actors actors = new Actors();
 
-            var result = await _context.Actors
-          .FirstOrDefaultAsync(m => m.ActorID == id);
+            var result =  _context.Actors
+          .FirstOrDefault(m => m.ActorID == id);
 
 
-            _context.Actors.Remove(actors);
+            _context.Actors.Remove(result);
             await _context.SaveChangesAsync();
 
-            return actors;
+            return result;
 
 
         }

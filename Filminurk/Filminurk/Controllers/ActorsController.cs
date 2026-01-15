@@ -6,6 +6,7 @@ using Filminurk.Models.Actors;
 using Filminurk.Models.Movies;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using Microsoft.EntityFrameworkCore;
 
 namespace Filminurk.Controllers
 {
@@ -95,16 +96,17 @@ namespace Filminurk.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var actors = await _actorService.Delete(id);
+           var actors = await _actorService.Delete(id);
 
             if (actors == null)
             {
                 return NotFound();
             }
           
-           
+            
 
             var vm = new ActorsDeleteView();
+            { 
             vm.ActorID = actors.ActorID;
             vm.FirstName = actors.FirstName;
             vm.LastName = actors.LastName;
@@ -113,13 +115,27 @@ namespace Filminurk.Controllers
             vm.MoviesActedFor = actors.MoviesActedFor;
             vm.Crimes = actors.Crimes;
             vm.Addiction = actors.Addiction;
-         
+            }
 
             return View(vm);
 
 
-        }
+           
 
+
+        }
+        [HttpPost]
+
+        public async Task<IActionResult> DeleteConfirmation(Guid id)
+        {
+            var actor = await _actorService.Delete(id);
+            if (actor == null)
+            {
+                return NotFound();
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
 
     }
 
