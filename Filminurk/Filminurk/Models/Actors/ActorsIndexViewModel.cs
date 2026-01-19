@@ -17,5 +17,7 @@ namespace Filminurk.Models.Actors
         public Addiction Addiction { get; set; }
         public Crimes Crimes { get; set; }
 
+   
+
     }
 }

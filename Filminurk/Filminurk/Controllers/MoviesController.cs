@@ -222,10 +222,12 @@ namespace Filminurk.Controllers
                 vm.EntryModifedAt = movie.EntryModifedAt;
                 vm.Images.AddRange(images);
 
-                return View(vm);
                 
-               
-            }
+
+            return RedirectToAction(nameof(Index));
+
+
+        }
         [HttpGet]
 
         public async Task <IActionResult> Details(Guid id)

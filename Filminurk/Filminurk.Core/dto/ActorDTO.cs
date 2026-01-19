@@ -22,5 +22,7 @@ namespace Filminurk.Core.dto
         public int Age { get; set; }
         public Addiction Addiction { get; set; }
         public Crimes Crimes { get; set; }
+
+      
     }
 }

@@ -34,9 +34,9 @@
 					<td>@actors.Addiction</td>
 					<td>@actors.Crimes</td>
 					<td>
-						<a asp-action="Details" asp-controller="Actors"  class="btn btn-outline-danger">Details</a>
-						<a asp-action="Update" asp-controller="Actors"  class="btn btn-outline-primary">Update</a>
-						<a asp-action="Delete" asp-controller="Actors" class="btn btn-outline-primary">Delete</a>
+						<a asp-action="View" asp-controller="Actors" asp-route-id="@actors.ActorID" class="btn btn-outline-danger">Details</a>
+						<a asp-action="Update" asp-controller="Actors" asp-route-id="@actors.ActorID" class="btn btn-outline-primary">Update</a>
+						<a asp-action="Delete" asp-controller="Actors" asp-route-id="@actors.ActorID" class="btn btn-outline-primary">Delete</a>
 					</td>
 
 				</tr>

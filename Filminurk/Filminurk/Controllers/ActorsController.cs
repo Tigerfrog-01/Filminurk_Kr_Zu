@@ -1,4 +1,6 @@
-﻿using Filminurk.ApplicationServices.Services;
+﻿using AspNetCoreGeneratedDocument;
+using Filminurk.ApplicationServices.Services;
+using Filminurk.Core.Domain;
 using Filminurk.Core.dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
@@ -13,19 +15,20 @@ namespace Filminurk.Controllers
     public class ActorsController : Controller
     {
         private readonly FilminurkTARpe24Context _context;
-       private readonly IActorServices _actorService;
+        private readonly IActorServices _actorService;
 
-        
+
+
         public ActorsController
        (
            FilminurkTARpe24Context context,
            IActorServices actorsService
-           
+
 
        )
         {
             _context = context;
-           _actorService = actorsService;
+            _actorService = actorsService;
 
 
         }
@@ -72,8 +75,8 @@ namespace Filminurk.Controllers
                     Age = vm.Age,
                     MoviesActedFor = vm.MoviesActedFor,
                     Crimes = vm.Crimes,
-                    Addiction = vm.Addiction,              
-                   
+                    Addiction = vm.Addiction,
+
 
 
 
@@ -96,47 +99,91 @@ namespace Filminurk.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(Guid id)
         {
-           var actors = await _actorService.Delete(id);
+            var actors = await _actorService.Delete(id);
 
             if (actors == null)
             {
                 return NotFound();
             }
-          
-            
+            return RedirectToAction(nameof(Index));
+
+
+
+
+
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> View(Guid id)
+        {
+            var actors = await _actorService.View(id);
+
+            if (actors == null)
+            {
+                return NotFound();
+            }
+
+
 
             var vm = new ActorsDeleteView();
-            { 
-            vm.ActorID = actors.ActorID;
-            vm.FirstName = actors.FirstName;
-            vm.LastName = actors.LastName;
-            vm.Nickname = actors.Nickname;
-            vm.Age = actors.Age;
-            vm.MoviesActedFor = actors.MoviesActedFor;
-            vm.Crimes = actors.Crimes;
-            vm.Addiction = actors.Addiction;
+            {
+                vm.ActorID = actors.ActorID;
+                vm.FirstName = actors.FirstName;
+                vm.LastName = actors.LastName;
+                vm.Nickname = actors.Nickname;
+                vm.Age = actors.Age;
+                vm.MoviesActedFor = actors.MoviesActedFor;
+                vm.Crimes = actors.Crimes;
+                vm.Addiction = actors.Addiction;
             }
 
             return View(vm);
 
 
+
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> Update(Guid id)
+        {
+            var vm = new ActorsDetailViewModel();
+            var actor = await _context.Actors.FirstOrDefaultAsync(x => x.ActorID == id);
+            if (actor != null)            
+            {
+                vm.ActorID = actor.ActorID;
+                vm.FirstName = actor.FirstName;
+                vm.LastName = actor.LastName;
+                vm.Nickname = actor.Nickname;
+                vm.Age = actor.Age;
+                vm.MoviesActedFor = actor.MoviesActedFor;
+                vm.Crimes = actor.Crimes;
+                vm.Addiction = actor.Addiction;
+            }
+            return View(vm);
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(ActorsDetailViewModel vm)
+        {
+
+            var actor = await _context.Actors.FirstOrDefaultAsync(x => x.ActorID == vm.ActorID);
+
+
+
+            actor.ActorID = vm.ActorID;
+            actor.FirstName = vm.FirstName;
+            actor.LastName = vm.LastName;
+            actor.Nickname = vm.Nickname;
+            actor.Age = vm.Age;
+            actor.MoviesActedFor = vm.MoviesActedFor;
+            actor.Crimes = vm.Crimes;
+            actor.Addiction = vm.Addiction;
            
 
+            await _context.SaveChangesAsync();
 
+            return RedirectToAction(nameof(Index)); ;
         }
-        [HttpPost]
-
-        public async Task<IActionResult> DeleteConfirmation(Guid id)
-        {
-            var actor = await _actorService.Delete(id);
-            if (actor == null)
-            {
-                return NotFound();
-            }
-
-            return RedirectToAction(nameof(Index));
-        }
-
     }
-
 }

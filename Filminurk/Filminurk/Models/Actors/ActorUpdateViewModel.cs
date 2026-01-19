@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Filminurk.Core.Domain;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Filminurk.Core.Domain
+namespace Filminurk.Models.Actors
 {
-    public class Actors
+    public class ActorUpdateViewModel
     {
         [Key]
         public Guid ActorID { get; set; }
         public string FirstName { get; set; }
-        public string? LastName { get; set; }
+        public string LastName { get; set; }
         public string Nickname { get; set; }
         public List<string>? MoviesActedFor { get; set; }
         public Guid PortraitID { get; set; }
@@ -20,9 +16,6 @@ namespace Filminurk.Core.Domain
         public Addiction Addiction { get; set; }
         public Crimes Crimes { get; set; }
 
-      
-
-
-
+     
     }
 }
