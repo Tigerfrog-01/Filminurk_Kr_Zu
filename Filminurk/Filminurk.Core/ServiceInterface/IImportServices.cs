@@ -8,5 +8,6 @@ namespace Filminurk.Core.ServiceInterface
 {
     public class IImportServices
     {
+
     }
 }

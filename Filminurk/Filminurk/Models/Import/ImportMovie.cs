@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Filminurk.Core.dto
-{
-    public class ImportDTO
-    {
-        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
-        public class Rating
+﻿namespace Filminurk.Models.Import
+{ 
+    
+    
+    public class Rating
         {
             public string Source { get; set; }
             public string Value { get; set; }
         }
 
+    public class ImportMovie
+    {
+        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+       
       
             public string Title { get; set; }
             public string Year { get; set; }
