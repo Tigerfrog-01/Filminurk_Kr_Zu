@@ -8,13 +8,10 @@ namespace Filminurk.Controllers
         {
             return View();
         }
-        [HttpGet]
-        public IActionResult Movie(string Movie);
-        {
 
-        }
-            
+
 
 
     }
 }
+

@@ -16,6 +16,7 @@ namespace Filminurk.Controllers
         private readonly IEmailsServices _emailsServices; //HOMEWORK LOCATION
 
         public AccountsController(
+
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             FilminurkTARpe24Context context

@@ -43,4 +43,4 @@ namespace Filminurk.Core.dto
             public string Response { get; set; }
         }
     }
-}
+
