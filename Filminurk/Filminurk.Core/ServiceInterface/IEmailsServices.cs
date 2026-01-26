@@ -10,7 +10,9 @@ namespace Filminurk.Core.ServiceInterface
     public interface IEmailsServices
     {
 
-        void SendEmail(EmailDTO dTO);
+        void SendEmail(EmailDTO dto);
+
+        
 
         //HOMEWORK LOCATION
     }

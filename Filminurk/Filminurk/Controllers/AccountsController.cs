@@ -1,4 +1,5 @@
 ﻿using Filminurk.Core.Domain;
+using Filminurk.Core.dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
 using Filminurk.Models.Accounts;
@@ -207,6 +208,23 @@ namespace Filminurk.Controllers
                     var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
                     var confirmationLink = Url.Action("ConfirmEmail", "Accounts", new { userID = user.Id, token = token }, Request.Scheme);
+
+                    var emailDto = new EmailDTO
+                    {
+                        SendToThisAddress = user.Email,
+                        EmailSubject = "Tõesta, et see on sinu email",
+                        EmailContent = $"<p>Vajuta <a href='{confirmationLink}'>Siin</a> Selleks, et tõestada see on tõesti sinu ja ainult sinu konto, kui sa ei ole teadlik,et oled teinud konto siis ära klikki, su andmed müüakse muid Hiinase ja Põhja KoreSae, aitäh.</p>"
+
+
+                    };
+
+                    _emailsServices.SendEmail(emailDto);
+                    return RedirectToAction(nameof(Index));
+
+
+
+
+
                     //HOMEWORK TASK: koosta email kasutajalt pärineva aadressile saatmiseks, kasutaja saab oma postkastist kätte emaili
                     //kinnituslingiga, mille jaoks kasutatakse tokenit. siin tuleb välja kutsuda vastav, uus, emaili saatmise meetod, mis saadab
                     //õige sisuga kirja
