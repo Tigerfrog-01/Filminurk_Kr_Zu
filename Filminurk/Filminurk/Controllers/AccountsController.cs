@@ -1,4 +1,5 @@
-﻿using Filminurk.Core.Domain;
+﻿using Filminurk.ApplicationServices.Services;
+using Filminurk.Core.Domain;
 using Filminurk.Core.dto;
 using Filminurk.Core.ServiceInterface;
 using Filminurk.Data;
@@ -20,12 +21,15 @@ namespace Filminurk.Controllers
 
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
-            FilminurkTARpe24Context context
+            FilminurkTARpe24Context context,
+            IEmailsServices emailsServices
             )
         {
+            
             _userManager = userManager;
             _signInManager = signInManager;
             _context = context;
+            _emailsServices = emailsServices;
         }
 
         [HttpGet]
@@ -213,7 +217,9 @@ namespace Filminurk.Controllers
                     {
                         SendToThisAddress = user.Email,
                         EmailSubject = "Tõesta, et see on sinu email",
-                        EmailContent = $"<p>Vajuta <a href='{confirmationLink}'>Siin</a> Selleks, et tõestada see on tõesti sinu ja ainult sinu konto, kui sa ei ole teadlik,et oled teinud konto siis ära klikki, su andmed müüakse muid Hiinase ja Põhja KoreSae, aitäh.</p>"
+                        EmailContent = $"<p>Vajuta {confirmationLink} Selleks, et tõestada see on tõesti sinu ja ainult sinu konto, kui sa ei ole teadlik,et oled teinud konto siis ära klikki, sundmed müüakse muid Hiinase ja Põhja KoreSae, aitäh.</p>",
+                      
+                        
 
 
                     };
