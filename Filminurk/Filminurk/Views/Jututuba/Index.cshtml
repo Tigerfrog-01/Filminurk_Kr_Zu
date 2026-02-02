@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Filminurk.Core.Domain
+@inject UserManager<ApplicationUser> UserManager
+
+<div class="container">
+    <input type="text" id="message" />
+    <input type="button" id="sendmessage" value="Send" />
+    <ul id="discussion"></ul>
+</div>
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+
+    <script type="text/javascript">
+        var connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", function (user, message) {
+            $('#discussion').append('<li><strong>' + user + '</strong>: ' + message + '</li>');
+        });
+
+        connection.start().catch(err => console.error(err.toString()));
+
+        $('#sendmessage').click(function () {
+            var msg = $('#message').val();
+           
+            connection.invoke("SendMessage", msg);
+            $('#message').val('').focus();
+        });
+    </script>
+}

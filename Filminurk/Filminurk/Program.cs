@@ -34,6 +34,9 @@ builder.Services.AddIdentity <ApplicationUser, IdentityRole>(options =>
     .AddDefaultTokenProviders()
     .AddTokenProvider<DataProtectorTokenProvider<ApplicationUser>>("CustomEmailConfirmation");
 
+builder.Services.AddSignalR();
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,5 +57,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<Filminurk.Hubs.ChatHub>("/chatHub");
 
 app.Run();

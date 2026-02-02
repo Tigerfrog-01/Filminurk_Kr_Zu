@@ -46,9 +46,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Accounts" asp-action="Register">Konto</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" href="https://localhost:44329/index.html">Jututuba</a>
-                        </li>
+                      
                     </ul>
                     <ul>
                         @if(signInManager.IsSignedIn(User))
@@ -57,6 +55,11 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="">Minu lemmikute nimekirjad</a>
 
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Jututuba" asp-action="Index">Jututuba</a>
+
+                            </li>
+                           
                             <li class="nav-item">
                                 <form method="post" asp-controller="Accounts" asp-action="LogOut">
                                     <button type="submit" class="nav-link btn-btn-link" style="width:auto;padding:0.8rem;">Logi välja</button>
