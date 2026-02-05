@@ -258,7 +258,7 @@ namespace Filminurk.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                return View("Index","Home");
+                return View("Login");
             }
             return BadRequest();
         }
