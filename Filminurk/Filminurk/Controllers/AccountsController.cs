@@ -225,7 +225,7 @@ namespace Filminurk.Controllers
                     };
 
                     _emailsServices.SendEmail(emailDto);
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction("Index", "Home");
 
 
 
@@ -258,7 +258,7 @@ namespace Filminurk.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                return View("Login");
+                return View("Index","Home");
             }
             return BadRequest();
         }
