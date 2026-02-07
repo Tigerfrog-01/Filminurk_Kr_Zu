@@ -26,6 +26,8 @@ namespace Filminurk.Data
 
         public DbSet<FileToDatabase> FilesToDatabase { get; set; }
 
+        
+
         public DbSet<FileToDatabase> IdentityRoles { get; set; }
 
     }
