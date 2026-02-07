@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Import";
+}
+
+<h1>Filmi importimine</h1>
+
+<p>@ViewBag.Message</p>
+
+<p>@ViewBag.Error</p>
+
+<img src="@ViewBag.Poster" alt="Poster" width="150" />
+
+<form asp-controller="Import" asp-action="Import" method="post">
+
+    <label>Filmi pealkiri:</label>
+    <input type="text" name="movieTitle" />
+    <input type="submit" value="Impordi" />
+
+</form>
+
+<br />
+

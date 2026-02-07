@@ -18,7 +18,7 @@ namespace Filminurk.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         
@@ -41,6 +41,8 @@ namespace Filminurk.Controllers
             {
                 
                 ViewBag.Message = $"Film '{result.Title}' ({result.Year}) Palju onne, film on edukalt valmis!";
+
+                ViewBag.Poster = result.Poster;
             }
             else
             {
