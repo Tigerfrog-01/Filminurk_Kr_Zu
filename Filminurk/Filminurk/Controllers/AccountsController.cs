@@ -258,7 +258,7 @@ namespace Filminurk.Controllers
             var result = await _userManager.ConfirmEmailAsync(user, token);
             if (result.Succeeded)
             {
-                return View("Login");
+                return RedirectToAction("Login","Accounts");
             }
             return BadRequest();
         }
@@ -292,10 +292,9 @@ namespace Filminurk.Controllers
                     {
                         return Redirect(returnURL);
                     }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                   
+                       return RedirectToAction("Index", "Home");
+                   
                 }
                 if (result.Succeeded == false)
                 {
@@ -307,12 +306,14 @@ namespace Filminurk.Controllers
                 }
                 if (result.IsLockedOut)
 
-                {
+                { 
+                    ModelState.AddModelError("", "Sisselogimine ebaõnnestus, kontakteeru administraatoriga");
                     return View("AccountLocked");
+                   
                 }
-                ModelState.AddModelError("", "Sisselogimine ebaõnnestus, kontakteeru administraatoriga");
+                
             }
-            return View(model);
+         return View(model);
         }
         [HttpPost]
         public async Task<IActionResult> Logout()
